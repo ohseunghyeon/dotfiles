@@ -2,6 +2,7 @@ local status, cmp = pcall(require, "cmp")
 if (not status) then return end
 local lspkind = require 'lspkind'
 
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -21,12 +22,16 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
+    { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
     { name = 'cmdline' },
   }),
   formatting = {
-    format = lspkind.cmp_format({ with_text = false, maxwidth = 50 })
+    format = lspkind.cmp_format({
+      mode = 'symbol',
+      maxwidth = 50
+    })
   }
 })
 
