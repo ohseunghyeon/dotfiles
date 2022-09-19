@@ -30,6 +30,7 @@ vim.opt.showcmd = true
 vim.opt.smarttab = true
 vim.opt.smartindent = true
 vim.opt.scrolloff = 10
+--vim.opt.shell = os.getenv('SHELL')
 vim.opt.shell = 'fish'
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2

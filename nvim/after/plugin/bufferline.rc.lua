@@ -7,7 +7,14 @@ bufferline.setup({
     separator_style = 'slant',
     show_buffer_close_icons = false,
     show_close_icon = false,
-    offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+    offsets = {
+      {
+        filetype = "NvimTree",
+        text = "File Explorer",
+        text_align = "center",
+        separator = true
+      }
+    },
     diagnostics = 'nvim_lsp',
   },
   highlights = {

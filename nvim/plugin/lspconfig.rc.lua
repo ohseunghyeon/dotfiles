@@ -8,21 +8,29 @@ local protocol = require('vim.lsp.protocol')
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  vim.api.nvim_exec_autocmds('User', {pattern = 'LspAttached'})
 
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  local keymap = vim.keymap.set
 
   --Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  local opts = { noremap = true, silent = true }
-
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  keymap('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  keymap('n', 'gd', vim.lsp.buf.definition, bufopts)
+  keymap('n', 'K', vim.lsp.buf.hover, bufopts)
+  keymap('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  keymap('n', 'gr', vim.lsp.buf.references, bufopts)
+  keymap('n', 'gr', vim.diagnostic.open_float, bufopts)
+  keymap('n', '<leader>lr', vim.lsp.buf.rename, bufopts)
+  keymap('n', '<leader>ls', vim.lsp.buf.signature_help, bufopts)
+  keymap('n', '<leader>la', vim.lsp.buf.code_action, bufopts)
+  keymap('n', '<leader>lf', vim.lsp.buf.formatting, bufopts)
+  keymap('n', '<leader>lj', vim.lsp.diagnostic.goto_next, bufopts)
+  keymap('n', '<leader>lk', vim.lsp.diagnostic.goto_prev, bufopts)
+  keymap('n', '<leader>lq', vim.lsp.diagnostic.set_loclist, bufopts)
 end
 
 protocol.CompletionItemKind = {
@@ -58,11 +66,6 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(
   vim.lsp.protocol.make_client_capabilities()
 )
 
-nvim_lsp.flow.setup {
-  on_attach = on_attach,
-  capabilities = capabilities
-}
-
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,
   filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
@@ -83,17 +86,20 @@ nvim_lsp.sumneko_lua.setup {
         -- Get the language server to recognize the `vim` global
         globals = { 'vim' },
       },
-
       workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false
+        library = {
+          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+          [vim.fn.stdpath "config" .. "/lua"] = true,
+        },
+      },
+      telemetry = {
+        enable = false,
       },
     },
   },
 }
 
-nvim_lsp.tailwindcss.setup {}
+-- nvim_lsp.tailwindcss.setup {}
 
 nvim_lsp.denols.setup {
   on_attach = on_attach,
