@@ -40,7 +40,7 @@ vim.api.nvim_create_autocmd('User', {
   desc = 'LSP actions',
   callback = function()
     local bufmap = function(mode, lhs, rhs)
-      local opts = {buffer = true}
+      local opts = { buffer = true }
       vim.keymap.set(mode, lhs, rhs, opts)
     end
 
@@ -59,7 +59,7 @@ vim.api.nvim_create_autocmd('User', {
     -- Jumps to the definition of the type symbol
     bufmap('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
 
-    -- Lists all the references 
+    -- Lists all the references
     bufmap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>')
 
     -- Displays a function's signature information
@@ -80,5 +80,8 @@ vim.api.nvim_create_autocmd('User', {
 
     -- Move to the next diagnostic
     bufmap('n', '<leader>lj', '<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>')
+
+    -- Format
+    bufmap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.formatting()<cr>')
   end
 })
