@@ -55,7 +55,7 @@ return packer.startup(function(use)
   }
 
   use 'neovim/nvim-lspconfig' -- LSP
-  use 'onsails/lspkind-nvim' -- vscode-like pictograms
+  -- use 'onsails/lspkind-nvim' -- vscode-like pictograms
   use 'hrsh7th/cmp-nvim-lsp' -- nvim-cmp source for neovim's built-in LSP
   use 'hrsh7th/cmp-nvim-lua' -- nvim-cmp source for neovim's built-in LSP
   use 'hrsh7th/cmp-buffer' -- nvim-cmp source for buffer words
@@ -70,32 +70,32 @@ return packer.startup(function(use)
 
   use 'glepnir/lspsaga.nvim' -- LSP UIs
   use "L3MON4D3/LuaSnip"
-  use "rafamadriz/friendly-snippets"
+  -- use "rafamadriz/friendly-snippets"
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   }
 
-  use "RRethy/vim-illuminate"
+  -- use "RRethy/vim-illuminate"
 
   use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-file-browser.nvim'
+  -- use 'nvim-telescope/telescope-file-browser.nvim'
   use "windwp/nvim-autopairs"
   use "windwp/nvim-ts-autotag"
 
   use "akinsho/bufferline.nvim"
-  use "norcalli/nvim-colorizer.lua"
+  use "norcalli/nvim-colorizer.lua" -- Add colors on RGB on css
   use "akinsho/toggleterm.nvim"
 
   -- Git
   use "lewis6991/gitsigns.nvim"
 
-  use "numToStr/Comment.nvim"
-  use "JoosepAlviste/nvim-ts-context-commentstring"
+  -- use "numToStr/Comment.nvim"
+  -- use "JoosepAlviste/nvim-ts-context-commentstring"
   use "kyazdani42/nvim-web-devicons"
   use "kyazdani42/nvim-tree.lua"
-  use "ahmedkhalf/project.nvim"
-  use "moll/vim-bbye"
+  -- use "ahmedkhalf/project.nvim"
+  -- use "moll/vim-bbye"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
