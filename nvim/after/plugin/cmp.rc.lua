@@ -23,8 +23,8 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ["<C-k>"] = cmp.mapping.select_prev_item(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
-    ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+    ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
  		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
    	["<C-e>"] = cmp.mapping({
 			i = cmp.mapping.abort(),
@@ -64,11 +64,11 @@ cmp.setup({
 		}),
   }),
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lua' },
-    { name = 'luasnip' },
-    { name = 'buffer' },
     { name = 'path' },
+    { name = 'nvim_lsp', keyword_length = 3 },
+    -- { name = 'nvim_lua' },
+    { name = 'buffer', keyword_length = 3 },
+    { name = 'luasnip', keyword_length = 2 },
     --{ name = 'cmdline' },
   }),
   formatting = {
@@ -77,7 +77,7 @@ cmp.setup({
       maxwidth = 50,
       menu = ({
         nvim_lsp = "[LSP]",
-        nvim_lua = "[Lua]",
+        -- nvim_lua = "[Lua]",
         luasnip = "[Luasnip]",
         buffer = "[Buffer]",
         path = "[Path]",
@@ -96,8 +96,8 @@ cmp.setup({
 })
 
 
-vim.cmd [[
-  set completeopt=menuone,noinsert,noselect
-  highlight! default link CmpItemKind CmpItemMenuDefault
-]]
+-- vim.cmd [[
+--   set completeopt=menuone,noinsert,noselect
+--   highlight! default link CmpItemKind CmpItemMenuDefault
+-- ]]
 

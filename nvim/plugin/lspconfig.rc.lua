@@ -1,37 +1,27 @@
 --vim.lsp.set_log_level("debug")
 
+local lsp_defaults = {
+  flags = {
+    debounce_text_changes = 150,
+  },
+  capabilities = require('cmp_nvim_lsp').update_capabilities(
+    vim.lsp.protocol.make_client_capabilities()
+  ),
+  on_attach = function(client, bufnr)
+    vim.api.nvim_exec_autocmds('User', { pattern = 'LspAttached' })
+  end
+}
+
 local status, nvim_lsp = pcall(require, "lspconfig")
 if (not status) then return end
 
+nvim_lsp.util.default_config = vim.tbl_deep_extend(
+  'force',
+  nvim_lsp.util.default_config,
+  lsp_defaults
+)
+
 local protocol = require('vim.lsp.protocol')
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  vim.api.nvim_exec_autocmds('User', {pattern = 'LspAttached'})
-
-  local keymap = vim.keymap.set
-
-  --Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  keymap('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  keymap('n', 'gd', vim.lsp.buf.definition, bufopts)
-  keymap('n', 'K', vim.lsp.buf.hover, bufopts)
-  keymap('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  keymap('n', 'gr', vim.lsp.buf.references, bufopts)
-  keymap('n', 'gr', vim.diagnostic.open_float, bufopts)
-  keymap('n', '<leader>lr', vim.lsp.buf.rename, bufopts)
-  keymap('n', '<leader>ls', vim.lsp.buf.signature_help, bufopts)
-  keymap('n', '<leader>la', vim.lsp.buf.code_action, bufopts)
-  keymap('n', '<leader>lf', vim.lsp.buf.formatting, bufopts)
-  keymap('n', '<leader>lj', vim.lsp.diagnostic.goto_next, bufopts)
-  keymap('n', '<leader>lk', vim.lsp.diagnostic.goto_prev, bufopts)
-  keymap('n', '<leader>lq', vim.lsp.diagnostic.set_loclist, bufopts)
-end
 
 protocol.CompletionItemKind = {
   '', -- Text
@@ -61,25 +51,15 @@ protocol.CompletionItemKind = {
   '', -- TypeParameter
 }
 
--- Set up completion using nvim_cmp with LSP source
-local capabilities = require('cmp_nvim_lsp').update_capabilities(
-  vim.lsp.protocol.make_client_capabilities()
-)
-
 nvim_lsp.tsserver.setup {
-  on_attach = on_attach,
   filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
   cmd = { "typescript-language-server", "--stdio" },
-  capabilities = capabilities,
   root_dir = nvim_lsp.util.root_pattern("package.json"),
 }
 
-nvim_lsp.sourcekit.setup {
-  on_attach = on_attach,
-}
+nvim_lsp.sourcekit.setup {}
 
 nvim_lsp.sumneko_lua.setup {
-  on_attach = on_attach,
   settings = {
     Lua = {
       diagnostics = {
@@ -102,8 +82,6 @@ nvim_lsp.sumneko_lua.setup {
 -- nvim_lsp.tailwindcss.setup {}
 
 nvim_lsp.denols.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
   root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
 }
 
