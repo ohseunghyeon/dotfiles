@@ -106,11 +106,34 @@ return packer.startup(function(use)
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-buffer',
       'saadparwaiz1/cmp_luasnip',
+      -- 'ray-x/lsp_signature.nvim',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
     },
   }
 
+  -- formating, linting
   use 'jose-elias-alvarez/null-ls.nvim'
+  -- terminal
   use 'akinsho/toggleterm.nvim'
+  -- highliting other uses of the word under the cursor
+  use "RRethy/vim-illuminate"
+  -- let buffer closed without closing window. bdelete command
+  use "moll/vim-bbye"
+  -- let lua load faster
+  use 'lewis6991/impatient.nvim'
+
+  -- DAP
+  use 'mfussenegger/nvim-dap'
+  use 'rcarriga/nvim-dap-ui'
+  use 'theHamsta/nvim-dap-virtual-text'
+  use {
+    "microsoft/vscode-js-debug",
+    opt = true,
+    run = "npm install --legacy-peer-deps && npm run compile"
+  }
+  use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
+
+  -- Language specific plugin
 
   if PACKER_BOOTSTRAP then
     require('packer').sync()

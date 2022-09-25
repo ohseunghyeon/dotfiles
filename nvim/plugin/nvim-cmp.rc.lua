@@ -24,7 +24,7 @@ cmp.setup {
     end,
   },
 
--- Completion settings
+  -- Completion settings
   completion = {
     --completeopt = 'menu,menuone,noselect'
     keyword_length = 2
@@ -73,7 +73,9 @@ cmp.setup {
     { name = 'luasnip' },
     { name = 'path' },
     { name = 'buffer' },
+    { name = 'nvim_lsp_signature_help' },
   },
+  experimental = {
+    ghost_text = true,
+  }
 }
-
-

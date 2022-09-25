@@ -38,8 +38,7 @@ vim.diagnostic.config({
 
 -- Add additional capabilities supported by nvim-cmp
 -- See: https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+-- local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown', 'plaintext' }
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -112,7 +111,9 @@ lspconfig.util.default_config = vim.tbl_deep_extend(
     root_dir = function()
       return vim.fn.getcwd()
     end,
-    capabilities = capabilities,
+    capabilities = cmp_nvim_lsp.update_capabilities(
+      vim.lsp.protocol.make_client_capabilities()
+    ),
     flags = {
       debounce_text_changes = 150,
     },
