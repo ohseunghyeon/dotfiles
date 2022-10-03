@@ -1,7 +1,7 @@
 local M = {}
 
 M.ui = {
-  theme = "gruvbox_material",
+  theme = "everforest",
   theme_toggle = { "gruvbox_material", "everforest" }
 }
 

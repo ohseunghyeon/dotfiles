@@ -2,16 +2,16 @@ local M = {}
 
 M.general = {
   n = {
-    [";"] = { ":", "command mode"},
+    [";"] = { ":", "command mode" },
 
     -- Resize with arrows
-    ["<C-Up>"] = { ":resize -2<CR>", "Resize Up"},
-    ["<C-Down>"] = { ":resize +2<CR>", "Resize Down"},
-    ["<C-Left>"] = { ":vertical resize -2<CR>", "Resize Left"},
-    ["<C-Right>"] = { ":vertical resize +2<CR>", "Resize Right"},
+    ["<C-Up>"] = { ":resize -2<CR>", "Resize Up" },
+    ["<C-Down>"] = { ":resize +2<CR>", "Resize Down" },
+    ["<C-Left>"] = { ":vertical resize -2<CR>", "Resize Left" },
+    ["<C-Right>"] = { ":vertical resize +2<CR>", "Resize Right" },
 
     -- Split window
-    ["<leader>ss"] = { ":split<Return><C-w>w", "split window horizontal"},
+    ["<leader>ss"] = { ":split<Return><C-w>w", "split window horizontal" },
     ["<leader>sv"] = { ":vsplit<Return><C-w>w", "split window vertical" },
   },
 }
@@ -127,10 +127,10 @@ M.dap_config = {
 
   n = {
     -- Debug keymapping
-    ["<leader>tb"] = { "<cmd> DapToggleBreakpoint <CR>", "Toggle Breakpoint" },
-    ["<leader>tc"] = { "<cmd> DapContinue <CR>", "Debug Continue" },
-    ["<F9>"] = { "<cmd> DapStepOver <CR>", "Debug StepOver" },
-    ["<F10>"] = { "<cmd> DapStepInto <CR>", "Debug StepInto" },
+    ["<leader>db"] = { "<cmd> DapToggleBreakpoint <CR>", "Toggle Breakpoint" },
+    ["<F5>"] = { "<cmd> DapContinue <CR>", "Debug Continue" },
+    ["<F10>"] = { "<cmd> DapStepOver <CR>", "Debug StepOver" },
+    ["<F11>"] = { "<cmd> DapStepInto <CR>", "Debug StepInto" },
     -- Shift + F10 won't work in TUI Neovim, but can take effect in GUI neoivm
     ["<leader><F10>"] = { "<cmd> DapStepOut <CR>", "Debug StepOut" },
     ["<leader><F12>"] = { "<cmd> DapTerminate <CR>", "Debug Terminate" },
@@ -140,19 +140,25 @@ M.dap_config = {
       end,
       "Debug Restart",
     },
-    ["<leader>te"] = {
+    ["<F6>"] = {
+      function()
+        require("dapui").toggle()
+      end,
+      "Toggle Dap UI"
+    },
+    ["<leader>de"] = {
       function()
         require("dapui").eval()
       end,
       "Debug Evaluate Expression",
     },
-    ["<leader>tf"] = {
+    ["<leader>df"] = {
       function()
         require("dapui").float_element()
       end,
       "Debug Float Element",
     },
-    ["<leader>trb"] = {
+    ["<leader>drb"] = {
       function()
         require("dap").clear_breakpoints()
       end,
@@ -160,7 +166,7 @@ M.dap_config = {
     },
   },
   v = {
-    ["<leader>te"] = {
+    ["<leader>de"] = {
       function()
         require("dapui").eval()
       end,
